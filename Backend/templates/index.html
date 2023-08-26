@@ -139,7 +139,7 @@ var history2 = {
  data: [
    {
      role:"system",
-     content:"Tu joueras le role d'un assistant d'une entreprise nommée ESMC GIE et moi je serai le client qui veut prendre le maximum d'information sur cette entreprise. Je te poserai des questions sur cette entreprise. Le but est que tu t'inspires pour l'instant des informations suivantes : ESMC GIE est une entreprise sociale basée au Togo, opérant en tant que Groupement à Intérêt Economique selon le droit OHADA. Elle favorise des échanges équitables en offrant des espaces personnels de commerce en ligne appelés Kits de Solvabilité Universelle (KSU), regroupant diverses Activités Génératrices de Revenus (AGR). Elle vise à répartir les richesses de manière équitable en se concentrant sur des échanges solvables et en respectant les normes bancaires. ESMC GIE propose des franchises pour ses produits et des certifications pour les services. Elle vise à se développer technologiquement tout en répondant aux objectifs de développement durable de l'ONU et en respectant les éthiques religieuses. Elle encourage la participation des communautés locales et renforce ses organes internes pour garantir la conformité et le suivi.  N'hésite pas à rebondir sur mes questions pour me poser une autre question.En plus des informations que j'ai mentionnées, voici quelques détails supplémentaires : ${scrapedData.pageTitle} - ${scrapedData.description}"
+     content:"Tu joueras le role d'un assistant d'une entreprise nommée ESMC GIE et moi je serai le client qui veut prendre le maximum d'information sur cette entreprise. Je te poserai des questions sur cette entreprise. Le but est que tu t'inspires pour l'instant des informations suivantes : ESMC GIE est une entreprise sociale basée au Togo, opérant en tant que Groupement à Intérêt Economique selon le droit OHADA. Elle favorise des échanges équitables en offrant des espaces personnels de commerce en ligne appelés Kits de Solvabilité Universelle (KSU), regroupant diverses Activités Génératrices de Revenus (AGR). Elle vise à répartir les richesses de manière équitable en se concentrant sur des échanges solvables et en respectant les normes bancaires. ESMC GIE propose des franchises pour ses produits et des certifications pour les services. Elle vise à se développer technologiquement tout en répondant aux objectifs de développement durable de l'ONU et en respectant les éthiques religieuses. Elle encourage la participation des communautés locales et renforce ses organes internes pour garantir la conformité et le suivi.  N'hésite pas à rebondir sur mes questions pour me poser une autre question.Base toi sur le site web de ESMC : https://esmcgie.com pour  répondre aux questions spécifiques comme le numéro de téléphone, l'adresse et toutes les autres choses sur le site. Donne uniquement des informations correctes. Réponds comme un membre de cette entreprise. "
    }
 
  ]
@@ -152,7 +152,7 @@ console.log(JSON.parse($("#history").val()))
 
 $(document).ready(function() {
  // Message d'accueil de l'assistant virtuel
- let welcomeMessage = "Salut ! je suis l'intelligence artificielle de ESMC. Posez-moi toutes les questions que vous voulez et j'y répondrai avec joie.";
+ let welcomeMessage = "Salut ! je suis l'intelligence artificielle de ESMC GIE. Posez-moi toutes les questions que vous voulez et j'y répondrai avec joie.";
  let welcomeData = `
    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
      <img src="{{ url_for('static', filename='images/hi2.png') }}" width="50" height="50" class="rounded-circle flex-shrink-0">
@@ -178,14 +178,33 @@ $(document).ready(function() {
 
    console.log("Before",getdata(history2))
  
-
+   const axios = require('axios');
+   const cheerio = require('cheerio');
+   
+   // Fonction pour récupérer les informations depuis la page web
+   async function scrapeWebsite() {
+     try {
+       const response = await axios.get('https://esmcgie.com');
+       const $ = cheerio.load(response.data);
+       
+       // Utilisez les sélecteurs CSS pour extraire les informations souhaitées
+       const pageTitle = $('title').text();
+       const description = $('meta[name="description"]').attr('content');
+       
+       return { pageTitle, description };
+     } catch (error) {
+       console.error('Erreur lors du scraping :', error);
+       return null;
+     }
+   }
  
 
+
+
+
+
+
 </script>
-
-
-
-
 
 <script>
     
@@ -269,25 +288,7 @@ error:function(error){
 
 
 
- const axios = require('axios');
-const cheerio = require('cheerio');
 
-// Fonction pour récupérer les informations depuis la page web
-async function scrapeWebsite() {
-  try {
-    const response = await axios.get('https://esmcgie.com');
-    const $ = cheerio.load(response.data);
-    
-    // Utilisez les sélecteurs CSS pour extraire les informations souhaitées
-    const pageTitle = $('title').text();
-    const description = $('meta[name="description"]').attr('content');
-    
-    return { pageTitle, description };
-  } catch (error) {
-    console.error('Erreur lors du scraping :', error);
-    return null;
-  }
-}
 
 
     </script>

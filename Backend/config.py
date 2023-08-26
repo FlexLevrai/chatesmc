@@ -4,8 +4,8 @@ class Config(object):
     TESTING = False
 
 class DevelopmentConfig(Config):
-    SECRET_KEY = "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"
-    OPENAI_KEY = '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'
+    SECRET_KEY = "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"
+    OPENAI_KEY = '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'
 
 config = {
     'development': DevelopmentConfig,
